@@ -65,7 +65,7 @@ npm run build
 
 This will generate a distributable installer/package in the dist/ folder.
 📂 Project Structure
-text
+```text
 
 CsBuilder/
 ├── index.html              # Main HTML structure
@@ -75,6 +75,7 @@ CsBuilder/
 ├── preload.js              # Secure bridge between renderer and main process
 ├── package.json            # Project manifest and dependencies
 └── README.md               # This file
+```
 
 🎮 Supported Games
 Game	Badge Color	Status
