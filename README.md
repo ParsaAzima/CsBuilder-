@@ -78,10 +78,13 @@ CsBuilder/
 ```
 
 🎮 Supported Games
+```text
 Game	Badge Color	Status
 CS2	#00ffd0	✅ Full support
 CSS	#ff9c00	✅ Full support
 CS 1.6	#ff4060	✅ Full support
+```
+
 📸 Screenshots
 <img width="1919" height="1140" alt="image" src="https://github.com/user-attachments/assets/aba1cf77-3195-48cb-a29d-7a9340855df2" />
 <img width="1919" height="1138" alt="image" src="https://github.com/user-attachments/assets/ef2a93f3-adbf-490e-9b03-9ae70792a18b" />
