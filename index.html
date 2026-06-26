@@ -1,0 +1,2221 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CS CFG Builder Pro</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <!-- Title Bar -->
+        <div class="titlebar">
+            <div class="titlebar-left">
+                <div class="app-logo">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path
+                            d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+                            stroke="#00ffd0"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </div>
+                <span class="app-name"
+                    >CS CFG Builder <span class="app-pro">PRO</span></span
+                >
+                <span class="app-version">v3.0</span>
+
+                <!-- Game Selector -->
+                <div class="game-selector">
+                    <button class="game-btn active" data-game="cs2">
+                        <span class="game-badge cs2">CS2</span>
+                    </button>
+                    <button class="game-btn" data-game="css">
+                        <span class="game-badge css">CSS</span>
+                    </button>
+                    <button class="game-btn" data-game="cs16">
+                        <span class="game-badge cs16">CS 1.6</span>
+                    </button>
+                </div>
+            </div>
+            <div class="titlebar-center">
+                <span class="current-file" id="currentFile">New Config</span>
+                <span class="game-indicator" id="gameIndicator"
+                    >— Counter-Strike 2</span
+                >
+            </div>
+            <div class="titlebar-right">
+                <button class="tb-btn" id="btnMinimize" title="Minimize">
+                    &#x2013;
+                </button>
+                <button class="tb-btn" id="btnMaximize" title="Maximize">
+                    &#x25A1;
+                </button>
+                <button class="tb-btn close" id="btnClose" title="Close">
+                    &#x2715;
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="app-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <button class="nav-btn active" data-tab="crosshair">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="16" />
+                            <line x1="8" y1="12" x2="16" y2="12" />
+                        </svg>
+                        <span>Crosshair</span>
+                    </button>
+                    <button class="nav-btn" data-tab="movement">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                        <span>Movement</span>
+                    </button>
+                    <button class="nav-btn" data-tab="mouse">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <rect x="6" y="3" width="12" height="18" rx="6" />
+                            <line x1="12" y1="7" x2="12" y2="11" />
+                        </svg>
+                        <span>Mouse</span>
+                    </button>
+                    <button class="nav-btn" data-tab="weapon">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path d="M3 12h10l2-4h4l2 4v4H3z" />
+                            <rect x="7" y="16" width="4" height="4" />
+                        </svg>
+                        <span>Weapon</span>
+                    </button>
+                    <button class="nav-btn" data-tab="video">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <rect x="2" y="5" width="16" height="14" rx="2" />
+                            <path d="M22 9l-6 3 6 3z" />
+                        </svg>
+                        <span>Video</span>
+                    </button>
+                    <button class="nav-btn" data-tab="audio">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <polygon
+                                points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"
+                            />
+                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                        </svg>
+                        <span>Audio</span>
+                    </button>
+                    <button class="nav-btn" data-tab="network">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <circle cx="12" cy="12" r="2" />
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+                            />
+                            <path d="M2 12h20" />
+                        </svg>
+                        <span>Network</span>
+                    </button>
+                    <button class="nav-btn" data-tab="binds">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <rect x="2" y="4" width="20" height="16" rx="2" />
+                            <path d="M7 8h1M11 8h1M15 8h1M8 12h8M8 16h4" />
+                        </svg>
+                        <span>Key Binds</span>
+                    </button>
+                    <button class="nav-btn" data-tab="hud">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <path d="M3 9h18M9 21V9" />
+                        </svg>
+                        <span>HUD</span>
+                    </button>
+                    <button class="nav-btn" data-tab="practice">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path
+                                d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+                            />
+                        </svg>
+                        <span>Practice</span>
+                    </button>
+                    <button class="nav-btn" data-tab="aliases">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <polyline points="16 18 22 12 16 6" />
+                            <polyline points="8 6 2 12 8 18" />
+                        </svg>
+                        <span>Aliases</span>
+                    </button>
+                    <button class="nav-btn" data-tab="misc">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <circle cx="12" cy="12" r="3" />
+                            <path
+                                d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M19.07 19.07l-1.41-1.41M5.34 5.34L3.93 3.93M22 12h-2M4 12H2M12 22v-2M12 4V2"
+                            />
+                        </svg>
+                        <span>Misc</span>
+                    </button>
+                </nav>
+
+                <div class="sidebar-bottom">
+                    <div class="preset-label">PRESETS</div>
+                    <button class="preset-btn" data-preset="pro">
+                        🏆 Pro Player
+                    </button>
+                    <button class="preset-btn" data-preset="low">
+                        ⚡ Low End PC
+                    </button>
+                    <button class="preset-btn" data-preset="faceit">
+                        🎯 FACEIT
+                    </button>
+                    <button class="preset-btn" data-preset="casual">
+                        😎 Casual
+                    </button>
+                    <button class="preset-btn" data-preset="default">
+                        🔄 Default
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- ═══ Tab: Crosshair ═══ -->
+                <section class="tab-panel active" id="tab-crosshair">
+                    <div class="panel-header">
+                        <h2>Crosshair Settings</h2>
+                        <p>
+                            Customize your in-game crosshair appearance and
+                            preview it live
+                        </p>
+                    </div>
+                    <div class="settings-grid">
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Style & Size</div>
+                                <div class="form-group">
+                                    <label>Crosshair Style</label>
+                                    <select id="cl_crosshairstyle">
+                                        <option value="0">0 — Default</option>
+                                        <option value="1">
+                                            1 — Default Static
+                                        </option>
+                                        <option value="2" selected>
+                                            2 — Classic
+                                        </option>
+                                        <option value="3">
+                                            3 — Classic Dynamic
+                                        </option>
+                                        <option value="4">
+                                            4 — Classic Static
+                                        </option>
+                                        <option value="5">5 — Tactical</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Size
+                                        <span
+                                            class="val-badge"
+                                            id="val-cl_crosshairsize"
+                                            >2</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="cl_crosshairsize"
+                                        min="0"
+                                        max="10"
+                                        step="0.5"
+                                        value="2"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Gap
+                                        <span
+                                            class="val-badge"
+                                            id="val-cl_crosshairgap"
+                                            >1</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="cl_crosshairgap"
+                                        min="-5"
+                                        max="10"
+                                        step="0.5"
+                                        value="1"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Thickness
+                                        <span
+                                            class="val-badge"
+                                            id="val-cl_crosshairthickness"
+                                            >0.5</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="cl_crosshairthickness"
+                                        min="0"
+                                        max="3"
+                                        step="0.5"
+                                        value="0.5"
+                                    />
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-title">Color</div>
+                                <div class="form-group">
+                                    <label>Color Preset</label>
+                                    <select id="cl_crosshaircolor">
+                                        <option value="1" selected>
+                                            1 — Green
+                                        </option>
+                                        <option value="2">2 — Yellow</option>
+                                        <option value="3">3 — Blue</option>
+                                        <option value="4">4 — Cyan</option>
+                                        <option value="5">5 — Custom</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Red
+                                        <span
+                                            class="val-badge"
+                                            id="val-cl_crosshaircolor_r"
+                                            >50</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="cl_crosshaircolor_r"
+                                        min="0"
+                                        max="255"
+                                        value="50"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Green
+                                        <span
+                                            class="val-badge"
+                                            id="val-cl_crosshaircolor_g"
+                                            >250</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="cl_crosshaircolor_g"
+                                        min="0"
+                                        max="255"
+                                        value="250"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Blue
+                                        <span
+                                            class="val-badge"
+                                            id="val-cl_crosshaircolor_b"
+                                            >50</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="cl_crosshaircolor_b"
+                                        min="0"
+                                        max="255"
+                                        value="50"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Alpha
+                                        <span
+                                            class="val-badge"
+                                            id="val-cl_crosshairalpha"
+                                            >200</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="cl_crosshairalpha"
+                                        min="0"
+                                        max="255"
+                                        value="200"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Options</div>
+                                <div class="toggle-group">
+                                    <label class="toggle-label"
+                                        ><span>Use Alpha</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="cl_crosshairusealpha"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Dot Crosshair</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="cl_crosshairdot" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Show in Spec</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="cl_show_observer_crosshair"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label
+                                        class="toggle-label"
+                                        id="cs2-outline-row"
+                                        ><span>Draw Outline (CS2)</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="cl_crosshair_drawoutline" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Outline Thickness
+                                        <span
+                                            class="val-badge"
+                                            id="val-cl_crosshair_outlinethickness"
+                                            >1</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="cl_crosshair_outlinethickness"
+                                        min="0"
+                                        max="3"
+                                        step="0.5"
+                                        value="1"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Split Alpha Ratio
+                                        <span
+                                            class="val-badge"
+                                            id="val-cl_crosshairsplit"
+                                            >0.5</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="cl_crosshairsplit"
+                                        min="0"
+                                        max="1"
+                                        step="0.05"
+                                        value="0.5"
+                                    />
+                                </div>
+
+                                <!-- CS2 Crosshair Code Import/Export -->
+                                <div
+                                    class="form-group"
+                                    id="cs2-sharecode-group"
+                                >
+                                    <label>CS2 Share Code</label>
+                                    <div class="input-row">
+                                        <input
+                                            type="text"
+                                            class="text-input"
+                                            id="cs2ShareCode"
+                                            placeholder="CSGO-xxxxx-xxxxx-xxxxx-xxxxx-xxxxx"
+                                        />
+                                        <button
+                                            class="btn-sm"
+                                            id="btnImportShare"
+                                        >
+                                            Import
+                                        </button>
+                                    </div>
+                                    <div class="share-hint">
+                                        Paste a CS2 crosshair share code to
+                                        import settings
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-title">Live Preview</div>
+                                <div class="crosshair-bg-selector">
+                                    <button
+                                        class="bg-btn active"
+                                        data-bg="#1a2030"
+                                    >
+                                        Dark
+                                    </button>
+                                    <button class="bg-btn" data-bg="#2d4a1e">
+                                        Dust2
+                                    </button>
+                                    <button class="bg-btn" data-bg="#8b7355">
+                                        Mirage
+                                    </button>
+                                    <button class="bg-btn" data-bg="#c8c8c8">
+                                        Bright
+                                    </button>
+                                </div>
+                                <div
+                                    class="crosshair-preview-container"
+                                    id="crosshairPreviewContainer"
+                                >
+                                    <canvas
+                                        id="crosshairCanvas"
+                                        width="200"
+                                        height="200"
+                                    ></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ═══ Tab: Movement ═══ -->
+                <section class="tab-panel" id="tab-movement">
+                    <div class="panel-header">
+                        <h2>Movement Settings</h2>
+                        <p>Configure movement, viewmodel and jump behavior</p>
+                    </div>
+                    <div class="settings-grid">
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Viewmodel</div>
+                                <div class="form-group">
+                                    <label
+                                        >Default FOV
+                                        <span
+                                            class="val-badge"
+                                            id="val-fov_desired"
+                                            >90</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="fov_desired"
+                                        min="75"
+                                        max="90"
+                                        step="1"
+                                        value="90"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Viewmodel FOV
+                                        <span
+                                            class="val-badge"
+                                            id="val-viewmodel_fov"
+                                            >54</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="viewmodel_fov"
+                                        min="54"
+                                        max="68"
+                                        step="1"
+                                        value="54"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Offset X
+                                        <span
+                                            class="val-badge"
+                                            id="val-viewmodel_offset_x"
+                                            >1</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="viewmodel_offset_x"
+                                        min="-2"
+                                        max="2.5"
+                                        step="0.5"
+                                        value="1"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Offset Y
+                                        <span
+                                            class="val-badge"
+                                            id="val-viewmodel_offset_y"
+                                            >1</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="viewmodel_offset_y"
+                                        min="-2"
+                                        max="2"
+                                        step="0.5"
+                                        value="1"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Offset Z
+                                        <span
+                                            class="val-badge"
+                                            id="val-viewmodel_offset_z"
+                                            >-1</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="viewmodel_offset_z"
+                                        min="-2"
+                                        max="2"
+                                        step="0.5"
+                                        value="-1"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Bob & Jump</div>
+                                <div class="toggle-group">
+                                    <label class="toggle-label"
+                                        ><span>Auto Bunny Hop</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="sv_autobunnyhopping" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Disable Bob</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="cl_bob_disable" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Bob Lat
+                                        <span
+                                            class="val-badge"
+                                            id="val-cl_bobamt_lat"
+                                            >0.1</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="cl_bobamt_lat"
+                                        min="0"
+                                        max="0.5"
+                                        step="0.05"
+                                        value="0.1"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Bob Vert
+                                        <span
+                                            class="val-badge"
+                                            id="val-cl_bobamt_vert"
+                                            >0.1</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="cl_bobamt_vert"
+                                        min="0"
+                                        max="0.5"
+                                        step="0.05"
+                                        value="0.1"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Bob Cycle
+                                        <span
+                                            class="val-badge"
+                                            id="val-cl_bobcycle"
+                                            >0.98</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="cl_bobcycle"
+                                        min="0.1"
+                                        max="2"
+                                        step="0.02"
+                                        value="0.98"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ═══ Tab: Mouse ═══ -->
+                <section class="tab-panel" id="tab-mouse">
+                    <div class="panel-header">
+                        <h2>Mouse Settings</h2>
+                        <p>Sensitivity, raw input and eDPI calculator</p>
+                    </div>
+                    <div class="settings-grid">
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Sensitivity</div>
+                                <div class="form-group">
+                                    <label
+                                        >Sensitivity
+                                        <span
+                                            class="val-badge"
+                                            id="val-sensitivity"
+                                            >1.8</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="sensitivity"
+                                        min="0.1"
+                                        max="10"
+                                        step="0.1"
+                                        value="1.8"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Zoom Sensitivity
+                                        <span
+                                            class="val-badge"
+                                            id="val-zoom_sensitivity_ratio"
+                                            >1.0</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="zoom_sensitivity_ratio"
+                                        min="0.5"
+                                        max="2"
+                                        step="0.05"
+                                        value="1.0"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >m_pitch
+                                        <span class="val-badge" id="val-m_pitch"
+                                            >0.022</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="m_pitch"
+                                        min="0.001"
+                                        max="0.1"
+                                        step="0.001"
+                                        value="0.022"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >m_yaw
+                                        <span class="val-badge" id="val-m_yaw"
+                                            >0.022</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="m_yaw"
+                                        min="0.001"
+                                        max="0.1"
+                                        step="0.001"
+                                        value="0.022"
+                                    />
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-title">Input Options</div>
+                                <div class="toggle-group">
+                                    <label class="toggle-label"
+                                        ><span>Raw Input</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="m_rawinput"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Mouse Filter</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="m_filter" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Mouse Acceleration</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="m_customaccel" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">eDPI Calculator</div>
+                                <div class="edpi-display">
+                                    <div class="edpi-item">
+                                        <span class="edpi-label">DPI</span>
+                                        <input
+                                            type="number"
+                                            id="dpi_value"
+                                            class="edpi-input"
+                                            value="400"
+                                            min="100"
+                                            max="3200"
+                                        />
+                                    </div>
+                                    <div class="edpi-cross">×</div>
+                                    <div class="edpi-item">
+                                        <span class="edpi-label"
+                                            >Sensitivity</span
+                                        >
+                                        <span
+                                            class="edpi-calc-val"
+                                            id="edpi-sens"
+                                            >1.8</span
+                                        >
+                                    </div>
+                                    <div class="edpi-equals">=</div>
+                                    <div class="edpi-item edpi-result">
+                                        <span class="edpi-label">eDPI</span>
+                                        <span
+                                            class="edpi-result-val"
+                                            id="edpi-result"
+                                            >720</span
+                                        >
+                                    </div>
+                                </div>
+                                <div class="edpi-rating" id="edpi-rating">
+                                    ✅ Recommended range: 600–1200
+                                </div>
+                                <div
+                                    class="edpi-pro-list"
+                                    id="edpiProList"
+                                ></div>
+                            </div>
+                            <div class="card">
+                                <div class="card-title">Sens Converter</div>
+                                <div class="form-group">
+                                    <label>Convert From</label>
+                                    <select id="sensConvertFrom">
+                                        <option value="cs2">CS2 / CSS</option>
+                                        <option value="valorant">
+                                            Valorant
+                                        </option>
+                                        <option value="apex">
+                                            Apex Legends
+                                        </option>
+                                        <option value="overwatch">
+                                            Overwatch
+                                        </option>
+                                        <option value="fortnite">
+                                            Fortnite
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Source Sensitivity</label>
+                                    <input
+                                        type="number"
+                                        id="sensConvertInput"
+                                        class="text-input"
+                                        value="1.8"
+                                        step="0.01"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>Source DPI</label>
+                                    <input
+                                        type="number"
+                                        id="sensConvertDPI"
+                                        class="text-input"
+                                        value="400"
+                                        step="100"
+                                    />
+                                </div>
+                                <button
+                                    class="btn-sm full-width"
+                                    id="btnConvertSens"
+                                >
+                                    Convert →
+                                </button>
+                                <div
+                                    class="convert-result"
+                                    id="sensConvertResult"
+                                ></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ═══ Tab: Weapon ═══ -->
+                <section class="tab-panel" id="tab-weapon">
+                    <div class="panel-header">
+                        <h2>Weapon Settings</h2>
+                        <p>Buy binds, quick buy and weapon preferences</p>
+                    </div>
+                    <div class="settings-grid">
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Weapon Behavior</div>
+                                <div class="toggle-group">
+                                    <label class="toggle-label"
+                                        ><span>Auto Switch on Pickup</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="cl_autowepswitch" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Fast Switch</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="hud_fastswitch"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                </div>
+                                <div class="form-group">
+                                    <label>Hand</label>
+                                    <select id="cl_righthand">
+                                        <option value="1" selected>
+                                            Right Hand
+                                        </option>
+                                        <option value="0">Left Hand</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-title">Buy Binds</div>
+                                <div
+                                    class="buybind-list"
+                                    id="buyBindList"
+                                ></div>
+                                <button class="btn-add" id="addBuyBind">
+                                    + Add Buy Bind
+                                </button>
+                            </div>
+                        </div>
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Quick Buy Weapons</div>
+                                <div class="weapon-search-wrap">
+                                    <input
+                                        type="text"
+                                        id="weaponSearch"
+                                        class="text-input"
+                                        placeholder="Filter weapons..."
+                                    />
+                                </div>
+                                <div class="weapon-grid" id="weaponGrid"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ═══ Tab: Video ═══ -->
+                <section class="tab-panel" id="tab-video">
+                    <div class="panel-header">
+                        <h2>Video Settings</h2>
+                        <p>Graphics quality, FPS and performance</p>
+                    </div>
+                    <div class="settings-grid">
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Performance</div>
+                                <div class="toggle-group">
+                                    <label class="toggle-label"
+                                        ><span>Disable Motion Blur</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="mat_motion_blur_enabled"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Disable Shadows</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="r_shadows" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Low Quality Models</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="r_lod" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>V-Sync Off</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="mat_vsync" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Multicore Rendering</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="mat_queue_mode"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >FPS Max
+                                        <span class="val-badge" id="val-fps_max"
+                                            >300</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="fps_max"
+                                        min="30"
+                                        max="999"
+                                        step="10"
+                                        value="300"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Gamma
+                                        <span
+                                            class="val-badge"
+                                            id="val-mat_monitorgamma"
+                                            >1.6</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="mat_monitorgamma"
+                                        min="1.4"
+                                        max="2.6"
+                                        step="0.1"
+                                        value="1.6"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Graphics Quality</div>
+                                <div class="form-group">
+                                    <label>Texture Quality</label>
+                                    <select id="mat_picmip">
+                                        <option value="-1">Very High</option>
+                                        <option value="0">High</option>
+                                        <option value="1">Medium</option>
+                                        <option value="2" selected>Low</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>MSAA</label>
+                                    <select id="mat_antialias">
+                                        <option value="0" selected>Off</option>
+                                        <option value="1">2x</option>
+                                        <option value="2">4x</option>
+                                        <option value="4">8x</option>
+                                    </select>
+                                </div>
+                                <!-- CS2-specific -->
+                                <div
+                                    id="cs2-video-extras"
+                                    class="game-specific-block"
+                                >
+                                    <div class="form-group">
+                                        <label
+                                            >CS2 Render Scale
+                                            <span
+                                                class="val-badge"
+                                                id="val-r_fullscreen_gamma"
+                                                >1.0</span
+                                            ></label
+                                        >
+                                        <input
+                                            type="range"
+                                            id="r_fullscreen_gamma"
+                                            min="0.5"
+                                            max="1.0"
+                                            step="0.05"
+                                            value="1.0"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ═══ Tab: Audio ═══ -->
+                <section class="tab-panel" id="tab-audio">
+                    <div class="panel-header">
+                        <h2>Audio Settings</h2>
+                        <p>Volume levels and sound quality</p>
+                    </div>
+                    <div class="settings-grid">
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Volume</div>
+                                <div class="form-group">
+                                    <label
+                                        >Master Volume
+                                        <span class="val-badge" id="val-volume"
+                                            >0.8</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="volume"
+                                        min="0"
+                                        max="1"
+                                        step="0.05"
+                                        value="0.8"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Music Volume
+                                        <span
+                                            class="val-badge"
+                                            id="val-snd_musicvolume"
+                                            >0</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="snd_musicvolume"
+                                        min="0"
+                                        max="1"
+                                        step="0.05"
+                                        value="0"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Voice Volume
+                                        <span
+                                            class="val-badge"
+                                            id="val-voice_scale"
+                                            >0.8</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="voice_scale"
+                                        min="0"
+                                        max="1"
+                                        step="0.05"
+                                        value="0.8"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Mixahead
+                                        <span
+                                            class="val-badge"
+                                            id="val-snd_mixahead"
+                                            >0.1</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="snd_mixahead"
+                                        min="0.05"
+                                        max="0.3"
+                                        step="0.01"
+                                        value="0.1"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Options</div>
+                                <div class="toggle-group">
+                                    <label class="toggle-label"
+                                        ><span>HRTF (3D Audio)</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="snd_headphone_pan_exponent" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Disable Voice Chat</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="voice_enable_disable" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                </div>
+                                <div class="form-group" id="cs2-audio-extra">
+                                    <label
+                                        >CS2 Overclock Audio
+                                        (snd_hwcompat)</label
+                                    >
+                                    <select id="snd_hwcompat">
+                                        <option value="0" selected>
+                                            0 — Default
+                                        </option>
+                                        <option value="1">
+                                            1 — Compatibility Mode
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ═══ Tab: Network ═══ -->
+                <section class="tab-panel" id="tab-network">
+                    <div class="panel-header">
+                        <h2>Network Settings</h2>
+                        <p>Rates, interp and lag compensation</p>
+                    </div>
+                    <div class="settings-grid">
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Rates</div>
+                                <div class="form-group">
+                                    <label>Rate</label>
+                                    <select id="rate">
+                                        <option value="25000">
+                                            25000 — Slow
+                                        </option>
+                                        <option value="80000">
+                                            80000 — Standard
+                                        </option>
+                                        <option value="128000" selected>
+                                            128000 — High
+                                        </option>
+                                        <option value="196608">
+                                            196608 — Very High
+                                        </option>
+                                        <option value="786432">
+                                            786432 — CS2 Max
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >cl_cmdrate
+                                        <span
+                                            class="val-badge"
+                                            id="val-cl_cmdrate"
+                                            >128</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="cl_cmdrate"
+                                        min="30"
+                                        max="128"
+                                        step="1"
+                                        value="128"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >cl_updaterate
+                                        <span
+                                            class="val-badge"
+                                            id="val-cl_updaterate"
+                                            >128</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="cl_updaterate"
+                                        min="30"
+                                        max="128"
+                                        step="1"
+                                        value="128"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Interpolation</div>
+                                <div class="form-group">
+                                    <label
+                                        >cl_interp
+                                        <span
+                                            class="val-badge"
+                                            id="val-cl_interp"
+                                            >0</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="cl_interp"
+                                        min="0"
+                                        max="0.1"
+                                        step="0.01"
+                                        value="0"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >cl_interp_ratio
+                                        <span
+                                            class="val-badge"
+                                            id="val-cl_interp_ratio"
+                                            >1</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="cl_interp_ratio"
+                                        min="1"
+                                        max="2"
+                                        step="0.5"
+                                        value="1"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>Lag Compensation</label>
+                                    <select id="cl_lagcompensation">
+                                        <option value="0">0 — Disabled</option>
+                                        <option value="1" selected>
+                                            1 — Enabled
+                                        </option>
+                                        <option value="2">2 — Ballistic</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ═══ Tab: Key Binds ═══ -->
+                <section class="tab-panel" id="tab-binds">
+                    <div class="panel-header">
+                        <h2>Key Binds</h2>
+                        <p>
+                            Assign custom actions to keyboard and mouse buttons
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="binds-toolbar">
+                            <button class="btn-sm" id="addBind">
+                                + Add Bind
+                            </button>
+                            <button class="btn-sm" id="btnImportDefaultBinds">
+                                Import Defaults
+                            </button>
+                            <button class="btn-sm danger" id="clearBinds">
+                                Clear All
+                            </button>
+                        </div>
+                        <div class="binds-table-wrapper">
+                            <table class="binds-table">
+                                <thead>
+                                    <tr>
+                                        <th>Key</th>
+                                        <th>Action / Command</th>
+                                        <th>Description</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bindsTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ═══ Tab: HUD ═══ -->
+                <section class="tab-panel" id="tab-hud">
+                    <div class="panel-header">
+                        <h2>HUD Settings</h2>
+                        <p>Radar, FPS display and HUD configuration</p>
+                    </div>
+                    <div class="settings-grid">
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Radar</div>
+                                <div class="toggle-group">
+                                    <label class="toggle-label"
+                                        ><span>Radar Rotate</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="cl_radar_rotate"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Always Centered</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="cl_radar_always_centered" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Radar Scale
+                                        <span
+                                            class="val-badge"
+                                            id="val-cl_radar_scale"
+                                            >0.4</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="cl_radar_scale"
+                                        min="0.25"
+                                        max="1"
+                                        step="0.05"
+                                        value="0.4"
+                                    />
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-title">FPS & Graph</div>
+                                <div class="toggle-group">
+                                    <label class="toggle-label"
+                                        ><span>Show FPS</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="cl_showfps"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Net Graph</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="net_graph" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Net Graph Position
+                                        <span
+                                            class="val-badge"
+                                            id="val-net_graphpos"
+                                            >1</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="net_graphpos"
+                                        min="1"
+                                        max="3"
+                                        step="1"
+                                        value="1"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">HUD Appearance</div>
+                                <div class="form-group">
+                                    <label>HUD Color</label>
+                                    <select id="cl_hud_color">
+                                        <option value="0">White</option>
+                                        <option value="1" selected>
+                                            Green
+                                        </option>
+                                        <option value="2">Yellow</option>
+                                        <option value="3">Blue</option>
+                                        <option value="4">Orange</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >HUD Scale
+                                        <span
+                                            class="val-badge"
+                                            id="val-hud_scaling"
+                                            >0.85</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="hud_scaling"
+                                        min="0.5"
+                                        max="1"
+                                        step="0.05"
+                                        value="0.85"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ═══ Tab: Practice ═══ -->
+                <section class="tab-panel" id="tab-practice">
+                    <div class="panel-header">
+                        <h2>Practice / Server Config</h2>
+                        <p>
+                            Generate practice server commands for aim training
+                            and grenade lineups
+                        </p>
+                    </div>
+                    <div class="settings-grid">
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Practice Mode</div>
+                                <div class="toggle-group">
+                                    <label class="toggle-label"
+                                        ><span>Infinite Ammo</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="sv_infinite_ammo"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Auto Respawn</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="mp_respawn_on_death_ct"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>No Friendlyfire</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="mp_friendlyfire_off" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Show Impact</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="sv_showimpacts"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Nade Trajectory</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="sv_grenade_trajectory"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Buy Anywhere</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="sv_buy_anywhere"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Unlimited Buy Time</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="mp_buytime_unlimited"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>God Mode (Bots)</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="bot_god" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-title">Money & Time</div>
+                                <div class="form-group">
+                                    <label
+                                        >Start Money
+                                        <span
+                                            class="val-badge"
+                                            id="val-mp_startmoney"
+                                            >16000</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="mp_startmoney"
+                                        min="800"
+                                        max="16000"
+                                        step="200"
+                                        value="16000"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        >Round Time (min)
+                                        <span
+                                            class="val-badge"
+                                            id="val-mp_roundtime"
+                                            >60</span
+                                        ></label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="mp_roundtime"
+                                        min="1"
+                                        max="60"
+                                        step="1"
+                                        value="60"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Bots</div>
+                                <div class="toggle-group">
+                                    <label class="toggle-label"
+                                        ><span>Kick All Bots</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="bot_kick_all"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Freeze Bots</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="bot_stop" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                </div>
+                                <div class="form-group">
+                                    <label>Bot Difficulty</label>
+                                    <select id="bot_difficulty">
+                                        <option value="0">Easy</option>
+                                        <option value="1" selected>
+                                            Normal
+                                        </option>
+                                        <option value="2">Hard</option>
+                                        <option value="3">Expert</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-title">Quick Commands</div>
+                                <div class="practice-quick-btns">
+                                    <button
+                                        class="quick-cmd-btn"
+                                        data-cmd="noclip"
+                                    >
+                                        noclip
+                                    </button>
+                                    <button
+                                        class="quick-cmd-btn"
+                                        data-cmd="give weapon_ak47"
+                                    >
+                                        give AK47
+                                    </button>
+                                    <button
+                                        class="quick-cmd-btn"
+                                        data-cmd="give weapon_awp"
+                                    >
+                                        give AWP
+                                    </button>
+                                    <button
+                                        class="quick-cmd-btn"
+                                        data-cmd="give weapon_hegrenade;give weapon_flashbang;give weapon_smokegrenade;give weapon_molotov;give weapon_decoy"
+                                    >
+                                        give All Nades
+                                    </button>
+                                    <button
+                                        class="quick-cmd-btn"
+                                        data-cmd="mp_restartgame 1"
+                                    >
+                                        Restart Round
+                                    </button>
+                                    <button
+                                        class="quick-cmd-btn"
+                                        data-cmd="bot_add_ct"
+                                    >
+                                        Add CT Bot
+                                    </button>
+                                    <button
+                                        class="quick-cmd-btn"
+                                        data-cmd="bot_add_t"
+                                    >
+                                        Add T Bot
+                                    </button>
+                                </div>
+                                <div class="share-hint">
+                                    Click to add command to Custom Commands
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ═══ Tab: Aliases ═══ -->
+                <section class="tab-panel" id="tab-aliases">
+                    <div class="panel-header">
+                        <h2>Aliases & Scripts</h2>
+                        <p>
+                            Pre-built scripts for jumpthrow, quick peek, buy
+                            scripts and more
+                        </p>
+                    </div>
+                    <div class="settings-grid">
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Built-in Scripts</div>
+                                <div class="alias-list" id="aliasList">
+                                    <div class="alias-item">
+                                        <div class="alias-header">
+                                            <label class="toggle"
+                                                ><input
+                                                    type="checkbox"
+                                                    id="alias_jumpthrow"
+                                                    checked /><span
+                                                    class="slider"
+                                                ></span
+                                            ></label>
+                                            <span class="alias-name"
+                                                >Jump Throw</span
+                                            >
+                                        </div>
+                                        <div class="alias-code">
+                                            alias "+jumpthrow" "+jump;-attack"
+                                            alias "-jumpthrow" "-jump"
+                                        </div>
+                                        <div class="alias-bind-row">
+                                            <span>Bind Key:</span>
+                                            <input
+                                                type="text"
+                                                class="alias-bind-input"
+                                                id="bind_jumpthrow"
+                                                value="ALT"
+                                                placeholder="KEY"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="alias-item">
+                                        <div class="alias-header">
+                                            <label class="toggle"
+                                                ><input
+                                                    type="checkbox"
+                                                    id="alias_quickpeek" /><span
+                                                    class="slider"
+                                                ></span
+                                            ></label>
+                                            <span class="alias-name"
+                                                >Quick Peek (D key)</span
+                                            >
+                                        </div>
+                                        <div class="alias-code">
+                                            alias "+qpeek" "+right;+attack"
+                                            alias "-qpeek" "-right;-attack"
+                                        </div>
+                                        <div class="alias-bind-row">
+                                            <span>Bind Key:</span>
+                                            <input
+                                                type="text"
+                                                class="alias-bind-input"
+                                                id="bind_quickpeek"
+                                                value="MOUSE5"
+                                                placeholder="KEY"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="alias-item">
+                                        <div class="alias-header">
+                                            <label class="toggle"
+                                                ><input
+                                                    type="checkbox"
+                                                    id="alias_buyscript"
+                                                    checked /><span
+                                                    class="slider"
+                                                ></span
+                                            ></label>
+                                            <span class="alias-name"
+                                                >Full Buy Script</span
+                                            >
+                                        </div>
+                                        <div class="alias-code">
+                                            alias "fullbuy" "buy ak47; buy m4a1;
+                                            buy awp; buy vesthelm; buy defuser"
+                                        </div>
+                                        <div class="alias-bind-row">
+                                            <span>Bind Key:</span>
+                                            <input
+                                                type="text"
+                                                class="alias-bind-input"
+                                                id="bind_buyscript"
+                                                value="KP_0"
+                                                placeholder="KEY"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="alias-item">
+                                        <div class="alias-header">
+                                            <label class="toggle"
+                                                ><input
+                                                    type="checkbox"
+                                                    id="alias_crouchjump" /><span
+                                                    class="slider"
+                                                ></span
+                                            ></label>
+                                            <span class="alias-name"
+                                                >Crouch Jump</span
+                                            >
+                                        </div>
+                                        <div class="alias-code">
+                                            alias "+crouchjump" "+jump;+duck"
+                                            alias "-crouchjump" "-jump;-duck"
+                                        </div>
+                                        <div class="alias-bind-row">
+                                            <span>Bind Key:</span>
+                                            <input
+                                                type="text"
+                                                class="alias-bind-input"
+                                                id="bind_crouchjump"
+                                                value="SPACE"
+                                                placeholder="KEY"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="alias-item">
+                                        <div class="alias-header">
+                                            <label class="toggle"
+                                                ><input
+                                                    type="checkbox"
+                                                    id="alias_volumetoggle" /><span
+                                                    class="slider"
+                                                ></span
+                                            ></label>
+                                            <span class="alias-name"
+                                                >Volume Toggle</span
+                                            >
+                                        </div>
+                                        <div class="alias-code">
+                                            alias "volupon" "volume 0.8; alias
+                                            voltoggle voludown" alias "voludown"
+                                            "volume 0; alias voltoggle volupon"
+                                            alias "voltoggle" "volupon"
+                                        </div>
+                                        <div class="alias-bind-row">
+                                            <span>Bind Key:</span>
+                                            <input
+                                                type="text"
+                                                class="alias-bind-input"
+                                                id="bind_volumetoggle"
+                                                value="KP_MINUS"
+                                                placeholder="KEY"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Custom Alias</div>
+                                <div id="customAliasList"></div>
+                                <button class="btn-add" id="addCustomAlias">
+                                    + Add Custom Alias
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ═══ Tab: Misc ═══ -->
+                <section class="tab-panel" id="tab-misc">
+                    <div class="panel-header">
+                        <h2>Misc Settings</h2>
+                        <p>Extra commands, config info and custom overrides</p>
+                    </div>
+                    <div class="settings-grid">
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Extra Options</div>
+                                <div class="toggle-group">
+                                    <label class="toggle-label"
+                                        ><span>Fast Weapon Switch</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="hud_fastswitch2"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Always Run</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="cl_forwardspeed" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-title">Custom Commands</div>
+                                <textarea
+                                    class="custom-cmds"
+                                    id="customCmds"
+                                    rows="10"
+                                    placeholder='// Add custom commands here&#10;// Example:&#10;// alias +jumpthrow "+jump;-attack"&#10;// bind "v" "+jumpthrow"'
+                                ></textarea>
+                            </div>
+                        </div>
+                        <div class="settings-col">
+                            <div class="card">
+                                <div class="card-title">Config Info</div>
+                                <div class="form-group">
+                                    <label>Config Name</label>
+                                    <input
+                                        type="text"
+                                        class="text-input"
+                                        id="configName"
+                                        value="My Config"
+                                        placeholder="autoexec"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>Author</label>
+                                    <input
+                                        type="text"
+                                        class="text-input"
+                                        id="configAuthor"
+                                        value=""
+                                        placeholder="Your name"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>Notes</label>
+                                    <textarea
+                                        class="custom-cmds"
+                                        id="configNotes"
+                                        rows="4"
+                                        placeholder="Config notes..."
+                                    ></textarea>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-title">Export Options</div>
+                                <div class="toggle-group">
+                                    <label class="toggle-label"
+                                        ><span>Include Comments</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="exportComments"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Include Header</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="exportHeader"
+                                                checked /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                    <label class="toggle-label"
+                                        ><span>Include Practice Config</span
+                                        ><label class="toggle"
+                                            ><input
+                                                type="checkbox"
+                                                id="exportPractice" /><span
+                                                class="slider"
+                                            ></span></label
+                                    ></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Right Panel: CFG Preview -->
+            <aside class="preview-panel">
+                <div class="preview-header">
+                    <span class="preview-title">CFG Preview</span>
+                    <div class="preview-actions">
+                        <button
+                            class="icon-btn"
+                            id="btnCopyAll"
+                            title="Copy All"
+                        >
+                            <svg
+                                width="14"
+                                height="14"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <rect
+                                    x="9"
+                                    y="9"
+                                    width="13"
+                                    height="13"
+                                    rx="2"
+                                />
+                                <path
+                                    d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="cfg-output" id="cfgOutput">
+                    <span class="cfg-comment">// CFG will appear here...</span>
+                </div>
+                <div class="preview-stats">
+                    <span id="lineCount">0 lines</span>
+                    <span id="charCount">0 chars</span>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="bottom-bar">
+            <div class="bottom-left">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Ready</span>
+            </div>
+            <div class="bottom-center">
+                <button class="btn-action" id="btnLoad">
+                    <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                    Load CFG
+                </button>
+                <button class="btn-action primary" id="btnSave">
+                    <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path
+                            d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"
+                        />
+                        <polyline points="17 21 17 13 7 13 7 21" />
+                        <polyline points="7 3 7 8 15 8" />
+                    </svg>
+                    Save CFG
+                </button>
+                <button class="btn-action accent" id="btnCopy">
+                    <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <rect x="9" y="9" width="13" height="13" rx="2" />
+                        <path
+                            d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"
+                        />
+                    </svg>
+                    Copy
+                </button>
+            </div>
+            <div class="bottom-right">
+                <span class="footer-brand">CS CFG Builder Pro © 2025</span>
+            </div>
+        </div>
+
+        <!-- Toast -->
+        <div class="toast" id="toast"></div>
+
+        <script src="renderer.js"></script>
+    </body>
+</html>

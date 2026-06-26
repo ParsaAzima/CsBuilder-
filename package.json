@@ -1,0 +1,20 @@
+{
+  "name": "CsBuilder",
+  "version": "1.0.0",
+  "description": "CSBuilder",
+  "main": "main.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "scripts": {
+    "start": "electron .",
+    "package-win": "electron-packager . CSBuilder --platform=win32 --arch=x64 --out=release-builds --overwrite --verbose",
+    "dist": "electron-builder --win --x64"
+  },
+  "devDependencies": {
+    "electron": "^28.2.0",
+    "electron-builder": "^26.15.3",
+    "electron-packager": "^17.1.2"
+  }
+}
