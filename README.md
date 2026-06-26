@@ -83,8 +83,9 @@ CS2	#00ffd0	✅ Full support
 CSS	#ff9c00	✅ Full support
 CS 1.6	#ff4060	✅ Full support
 📸 Screenshots
+<img width="1919" height="1140" alt="image" src="https://github.com/user-attachments/assets/aba1cf77-3195-48cb-a29d-7a9340855df2" />
+<img width="1919" height="1138" alt="image" src="https://github.com/user-attachments/assets/ef2a93f3-adbf-490e-9b03-9ae70792a18b" />
 
-(Screenshots go here – you can add them after uploading the project)
 🤝 Contributing
 
 Contributions are welcome! If you have an idea for a new feature or find a bug, feel free to open an issue or submit a pull request.
